@@ -13,3 +13,12 @@ class SignupForm(UserCreationForm):
         fields = (
             'username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'address', 'phone_number',
             'latitude', 'longitude')
+
+
+class UserProfileUpdateForm(forms.ModelForm):
+    latitude = forms.DecimalField(max_digits=9, decimal_places=6, required=True)
+    longitude = forms.DecimalField(max_digits=9, decimal_places=6, required=True)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'username', 'phone_number', 'address', 'latitude', 'longitude')

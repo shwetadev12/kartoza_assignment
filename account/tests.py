@@ -72,3 +72,26 @@ class UserProfileViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'user/user_profile.html')
         self.assertEqual(response.context['user'], self.user)
+
+
+class UsersLocationViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('map')
+        User = get_user_model()
+        User.objects.create_user(username='user1', password='password1', location=Point(27.2356, 75.2356))
+        User.objects.create_user(username='user2', password='password2', location=Point(28.2356, 76.2356))
+
+    def test_users_location_view(self):
+        self.client.login(username='user1', password='password1')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'user/user_location.html')
+
+
+class UserSignOutViewTest(TestCase):
+    def test_sign_out_redirects_to_sign_in_page(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('signout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('signin'))
