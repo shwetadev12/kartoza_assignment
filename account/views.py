@@ -57,7 +57,6 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileUpdateForm
-    # fields = ['first_name', 'last_name', 'email', 'username', 'phone_number', 'address', 'location']
     template_name = 'user/update_profile.html'
     success_url = reverse_lazy('profile')
     login_url = '/account/user/signin/'
@@ -83,7 +82,7 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class UsersLocationView(LoginRequiredMixin, TemplateView):
+class UsersLocationView(TemplateView):
     template_name = 'user/user_location.html'
     login_url = '/account/user/signin/'
 
