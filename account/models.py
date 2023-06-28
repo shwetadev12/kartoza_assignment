@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 class User(AbstractUser):
     phone_number = models.CharField(max_length=12, blank=True)
     address = models.CharField(max_length=220, blank=True)
-    location = models.PointField()
+    location = models.PointField(null=True)
     is_staff = models.BooleanField(default=True)
 
     groups = models.ManyToManyField(Group, related_name='custom_user_groups')
